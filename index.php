@@ -107,14 +107,15 @@ $show_complete_tasks = rand(0, 1);
                     </div>
 
                     <label class="checkbox">
-                        <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox">
-                        <span class="checkbox__text">Показывать выполненные</span>
+                      <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox" <?= ($show_complete_tasks) ? 'checked':'' ?>>
+                      <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
 
                 <table class="tasks">
 
                     <!--показывать эту строку, если переменная равна единице-->
+                    <?php if ($show_complete_tasks): ?> 
                     <tr class="tasks__item task task--completed">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -127,6 +128,7 @@ $show_complete_tasks = rand(0, 1);
                         <td class="task__controls">
                         </td>
                     </tr>
+                    <?php endif; ?>
 
                     <tr class="tasks__item task">
                         <td class="task__select">
