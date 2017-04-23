@@ -14,62 +14,58 @@ $project_list = ["Входящие", "Учеба", "Работа", "Домашн
 
 //создаем двумерный массив
 $tasks = [
-  [
-    'task' => 'Собеседование в IT компании',
-    'due_date' => "01.06.2017",
-    'project' => 'Работа',
-    'realized' => false
-  ],
-  [
-    'task' => 'Выполнить тестовое задание',
-    'due_date' => "25.05.2017",
-    'project' => 'Работа',
-    'realized' => false
-  ],
-  [
-    'task' => 'Сделать задание первого раздела',
-    'due_date' => "21.04.2017",
-    'project' => 'Учеба',
-    'realized' => true
-  ],
-  [
-    'task' => 'Встреча с другом',
-    'due_date' => "22.04.2017",
-    'project' => 'Входящие',
-    'realized' => false
-  ],
-  [
-    'task' => 'Купить корм для кота',
-    'due_date' => null,
-    'project' => 'Домашние дела',
-    'realized' => false
-  ],
-  [
-    'task' => 'Заказать пиццу',
-    'due_date' => null,
-    'project' => 'Домашние дела',
-    'realized' => false
-  ]
+    [
+        'task' => 'Собеседование в IT компании',
+        'due_date' => "01.06.2017",
+        'project' => 'Работа',
+        'realized' => false
+    ],
+    [
+        'task' => 'Выполнить тестовое задание',
+        'due_date' => "25.05.2017",
+        'project' => 'Работа',
+        'realized' => false
+    ],
+    [
+        'task' => 'Сделать задание первого раздела',
+        'due_date' => "21.04.2017",
+        'project' => 'Учеба',
+        'realized' => true
+    ],
+    [
+        'task' => 'Встреча с другом',
+        'due_date' => "22.04.2017",
+        'project' => 'Входящие',
+        'realized' => false
+    ],
+    [
+        'task' => 'Купить корм для кота',
+        'due_date' => null,
+        'project' => 'Домашние дела',
+        'realized' => false
+    ],
+    [
+        'task' => 'Заказать пиццу',
+        'due_date' => null,
+        'project' => 'Домашние дела',
+        'realized' => false
+    ]
 ];
 
 //функция для подсчета элеметов в массиве
-function tasks_cnt($tasks, $project): int {
-  if ($project == 'Все') {
-    return count($tasks);
-  }
-  else if ($project) {
-    $k = 0;
-    foreach ($tasks as $index => $project_value) {
-      if ($project_value['project'] == $project) {
-        $k++;
-      }
+function tasks_cnt(array $tasks, string $project): int 
+{
+    if ($project) {
+        $count = 0;
+        foreach ($tasks as $task) {
+            if ($task['project'] == $project) {
+            $count++;
+            }   
+        }
     }
-    return $k;
-  }
-  else {
-    return 0;
-  }
+return $count;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
