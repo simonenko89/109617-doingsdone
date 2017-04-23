@@ -7,7 +7,64 @@ $current_ts = time(); // текущая метка времени
 $date_deadline = date("d.m.Y", $task_deadline_ts);
 
 // в эту переменную запишите кол-во дней до даты задачи
-$days_until_deadline = floor(($task_deadline_ts-$current_ts)/86400);
+$days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
+
+// создаем массив с проектами
+$project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+
+//создаем двумерный массив
+$tasks = [
+  [
+    'task' => 'Собеседование в IT компании',
+    'due_date' => "01.06.2017",
+    'project' => 'Работа',
+    'realized' => 'Нет'
+  ],
+  [
+    'task' => 'Выполнить тестовое задание',
+    'due_date' => "25.05.2017",
+    'project' => 'Работа',
+    'realized' => 'Нет'
+  ],
+  [
+    'task' => 'Сделать задание первого раздела',
+    'due_date' => "21.04.2017",
+    'project' => 'Учеба',
+    'realized' => 'Да'
+  ],
+  [
+    'task' => 'Встреча с другом',
+    'due_date' => "22.04.2017",
+    'project' => 'Входящие',
+    'realized' => 'Нет'
+  ],
+  [
+    'task' => 'Купить корм для кота',
+    'due_date' => 'Нет',
+    'project' => 'Домашние дела',
+    'realized' => 'Нет'
+  ],
+  [
+    'task' => 'Заказать пиццу',
+    'due_date' => 'Нет',
+    'project' => 'Домашние дела',
+    'realized' => 'Нет'
+  ]
+];
+
+//функция подсчета вхождений элемента в массив
+function count_value($value, $array) {
+  $i = 0;
+  $k = 0;
+  while($i < count($array)) {
+    $i++;
+    if ($array[$i]['project'] == $value) {
+      $k++;
+    }
+  }
+  return $k;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,30 +109,12 @@ $days_until_deadline = floor(($task_deadline_ts-$current_ts)/86400);
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Входящие</a>
-                            <span class="main-navigation__list-item-count">24</span>
+                      <?php foreach ($project_list as $task): ?>
+                        <li class="main-navigation__list-item <?=$task == $project_list[0] ? 'main-navigation__list-item--active' : '';?>" >
+                            <a class="main-navigation__list-item-link" href="#"><?=$task;?></a>
+                            <span class="main-navigation__list-item-count"><?=count_value($task, $tasks);?></span>
                         </li>
-
-                        <li class="main-navigation__list-item main-navigation__list-item--active">
-                            <a class="main-navigation__list-item-link" href="#">Учеба</a>
-                            <span class="main-navigation__list-item-count">12</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Здоровье</a>
-                            <span class="main-navigation__list-item-count">3</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Домашние дела</a>
-                            <span class="main-navigation__list-item-count">7</span>
-                        </li>
-
-                        <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Авто</a>
-                            <span class="main-navigation__list-item-count">0</span>
-                        </li>
+                      <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -121,19 +160,20 @@ $days_until_deadline = floor(($task_deadline_ts-$current_ts)/86400);
                 </div>
 
                 <table class="tasks">
-                    <tr class="tasks__item task task--completed">
+                  <?php foreach ($tasks as $key => $val): ?>
+                    <tr class="tasks__item task <?=$val['realized'] == 'Да' ? 'task--completed' : '';?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                                <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
+                                <input class="checkbox__input visually-hidden" type="checkbox" <?=$val['realized'] == 'Да' ? 'checked' : '';?>>
+                                <span class="checkbox__text"><?=$val['task'];?></span>
                             </label>
                         </td>
-                        <td class="task__date">10.04.2017</td>
+                        <td class="task__date"><?=$val['due_date'];?></td>
 
                         <td class="task__controls">
                         </td>
                     </tr>
-
+                  <?php endforeach; ?>
                     <!--добавьте здесь класс "task--important" если эта задача просрочена-->
                     <tr class="tasks__item task <?= $days_until_deadline <= 0 ? 'task--important' : '' ?> ">
                         <td class="task__select">
