@@ -18,52 +18,39 @@ $tasks = [
     'task' => 'Собеседование в IT компании',
     'due_date' => "01.06.2017",
     'project' => 'Работа',
-    'realized' => 'Нет'
+    'realized' => false
   ],
   [
     'task' => 'Выполнить тестовое задание',
     'due_date' => "25.05.2017",
     'project' => 'Работа',
-    'realized' => 'Нет'
+    'realized' => false
   ],
   [
     'task' => 'Сделать задание первого раздела',
     'due_date' => "21.04.2017",
     'project' => 'Учеба',
-    'realized' => 'Да'
+    'realized' => true
   ],
   [
     'task' => 'Встреча с другом',
     'due_date' => "22.04.2017",
     'project' => 'Входящие',
-    'realized' => 'Нет'
+    'realized' => false
   ],
   [
     'task' => 'Купить корм для кота',
-    'due_date' => 'Нет',
+    'due_date' => null,
     'project' => 'Домашние дела',
-    'realized' => 'Нет'
+    'realized' => false
   ],
   [
     'task' => 'Заказать пиццу',
-    'due_date' => 'Нет',
+    'due_date' => null,
     'project' => 'Домашние дела',
-    'realized' => 'Нет'
+    'realized' => false
   ]
 ];
-
-//функция подсчета вхождений элемента в массив
-function count_value($value, $array) {
-  $i = 0;
-  $k = 0;
-  while($i < count($array)) {
-    $i++;
-    if ($array[$i]['project'] == $value) {
-      $k++;
-    }
-  }
-  return $k;
-}
 
 ?>
 <!DOCTYPE html>
@@ -109,10 +96,10 @@ function count_value($value, $array) {
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                      <?php foreach ($project_list as $task): ?>
-                        <li class="main-navigation__list-item <?=$task == $project_list[0] ? 'main-navigation__list-item--active' : '';?>" >
-                            <a class="main-navigation__list-item-link" href="#"><?=$task;?></a>
-                            <span class="main-navigation__list-item-count"><?=count_value($task, $tasks);?></span>
+                      <?php foreach ($project_list as $index => $project): ?>
+                        <li class="main-navigation__list-item <?=$index == 0 ? 'main-navigation__list-item--active' : '';?>" >
+                            <a class="main-navigation__list-item-link" href="#"><?=$project;?></a>
+                            <span class="main-navigation__list-item-count">24</span>
                         </li>
                       <?php endforeach; ?>
                     </ul>
@@ -160,15 +147,15 @@ function count_value($value, $array) {
                 </div>
 
                 <table class="tasks">
-                  <?php foreach ($tasks as $key => $val): ?>
-                    <tr class="tasks__item task <?=$val['realized'] == 'Да' ? 'task--completed' : '';?>">
+                  <?php foreach ($tasks as $index => $task): ?>
+                    <tr class="tasks__item task <?=$task['realized'] ? 'task--completed' : '';?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" <?=$val['realized'] == 'Да' ? 'checked' : '';?>>
-                                <span class="checkbox__text"><?=$val['task'];?></span>
+                                <input class="checkbox__input visually-hidden" type="checkbox" <?=$task['realized'] ? 'checked' : '';?>>
+                                <span class="checkbox__text"><?=$task['task'];?></span>
                             </label>
                         </td>
-                        <td class="task__date"><?=$val['due_date'];?></td>
+                        <td class="task__date"><?=$task['due_date'] ? $task['due_date'] : '';?></td>
 
                         <td class="task__controls">
                         </td>
