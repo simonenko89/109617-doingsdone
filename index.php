@@ -52,6 +52,24 @@ $tasks = [
   ]
 ];
 
+//функция для подсчета элеметов в массиве
+function tasks_cnt($tasks, $project): int {
+  if ($project == 'Все') {
+    return count($tasks);
+  }
+  else if ($project) {
+    $k = 0;
+    foreach ($tasks as $index => $project_value) {
+      if ($project_value['project'] == $project) {
+        $k++;
+      }
+    }
+    return $k;
+  }
+  else {
+    return 0;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +117,7 @@ $tasks = [
                       <?php foreach ($project_list as $index => $project): ?>
                         <li class="main-navigation__list-item <?=$index == 0 ? 'main-navigation__list-item--active' : '';?>" >
                             <a class="main-navigation__list-item-link" href="#"><?=$project;?></a>
-                            <span class="main-navigation__list-item-count">24</span>
+                            <span class="main-navigation__list-item-count"><?=tasks_cnt($tasks, $project);?></span>
                         </li>
                       <?php endforeach; ?>
                     </ul>
