@@ -55,15 +55,16 @@ $tasks = [
 //функция для подсчета элеметов в массиве
 function tasks_cnt(array $tasks, string $project): int 
 {
-    if ($project) {
-        $count = 0;
-        foreach ($tasks as $task) {
-            if ($task['project'] == $project) {
-            $count++;
-            }   
-        }
+    if ($project == "Все") {
+        return count($tasks);
     }
-return $count;
+    $count = 0;
+    foreach ($tasks as $task) {
+        if ($task['project'] == $project) {
+            $count++;
+        }   
+    }
+    return $count;
 }
 
 ?>
