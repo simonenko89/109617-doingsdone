@@ -4,7 +4,6 @@ include 'functions.php';
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Дела в Порядке!</title>
@@ -14,14 +13,14 @@ include 'functions.php';
 
 <body><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
-    <?=include_template('templates\header.php', []); ?>
+    <?=include_template('header.php', '', ''); ?>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
-        <?=include_template('templates\main.php', []); ?>
+        <?=include_template('main.php', $project_list, $tasks); ?>
     </div>
 </div>
 
-<?=include_template('templates\footer.php', []); ?>
+<?=include_template('footer.php', '', ''); ?>
     
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>
