@@ -1,67 +1,26 @@
 <?php
 
-function include_template(string $template, $template_param1, $template_param2)
+function include_template(string $template, array $params = []): string
 {
-    if ($template) {
-        htmlspecialchars($template_param1);
-        htmlspecialchars($template_param2);
-        ob_start();
-        include 'templates/'.$template;
-        $k = ob_get_clean();
-        return $k;
-    } else {
-        return '';
+    $filename = 'templates/'.$template.'.php';
+    if (!file_exists($filename)) {
+        return '';        
     }
+    
+    extract($params);
+    
+    ob_start();
+    
+    include $filename;
+    
+    return ob_get_clean();
 }
 
-$days = rand(0, 3);
-$task_deadline_ts = strtotime("+" . $days . " day"); 
-$current_ts = time();
-$date_deadline = date("d.m.Y", $task_deadline_ts);
-$days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
+function xss(string $checked_value)
+{
+    return htmlspecialchars($checked_value);
+}
 
-
-$project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
-
-
-$tasks = [
-    [
-        'task' => 'Собеседование в IT компании',
-        'due_date' => "01.06.2017",
-        'project' => 'Работа',
-        'realized' => false
-    ],
-    [
-        'task' => 'Выполнить тестовое задание',
-        'due_date' => "25.05.2017",
-        'project' => 'Работа',
-        'realized' => false
-    ],
-    [
-        'task' => 'Сделать задание первого раздела',
-        'due_date' => "21.04.2017",
-        'project' => 'Учеба',
-        'realized' => true
-    ],
-    [
-        'task' => 'Встреча с другом',
-        'due_date' => "22.04.2017",
-        'project' => 'Входящие',
-        'realized' => false
-    ],
-    [
-        'task' => 'Купить корм для кота',
-        'due_date' => null,
-        'project' => 'Домашние дела',
-        'realized' => false
-    ],
-    [
-        'task' => 'Заказать пиццу',
-        'due_date' => null,
-        'project' => 'Домашние дела',
-        'realized' => false
-    ]
-];
 
 function tasks_cnt(array $tasks, string $project): int 
 {
@@ -74,6 +33,7 @@ function tasks_cnt(array $tasks, string $project): int
             $count++;
         }   
     }
+    
     return $count;
 };
 
