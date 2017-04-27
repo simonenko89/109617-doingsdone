@@ -1,9 +1,13 @@
 <?php
 
-function include_template(string $template, array $template_param)
+function include_template(string $template, $template_param1, $template_param2)
 {
     if ($template) {
-        $k = include $template;
+        htmlspecialchars($template_param1);
+        htmlspecialchars($template_param2);
+        ob_start();
+        include 'templates/'.$template;
+        $k = ob_get_clean();
         return $k;
     } else {
         return '';
@@ -11,19 +15,15 @@ function include_template(string $template, array $template_param)
 }
 
 $days = rand(0, 3);
-$task_deadline_ts = strtotime("+" . $days . " day"); // метка времени даты выполнения задачи
-$current_ts = time(); // текущая метка времени
-
-// запишите сюда дату выполнения задачи в формате дд.мм.гггг
+$task_deadline_ts = strtotime("+" . $days . " day"); 
+$current_ts = time();
 $date_deadline = date("d.m.Y", $task_deadline_ts);
-
-// в эту переменную запишите кол-во дней до даты задачи
 $days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
 
-// создаем массив с проектами
+
 $project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 
-//создаем двумерный массив
+
 $tasks = [
     [
         'task' => 'Собеседование в IT компании',
@@ -63,7 +63,6 @@ $tasks = [
     ]
 ];
 
-//функция для подсчета элеметов в массиве
 function tasks_cnt(array $tasks, string $project): int 
 {
     if ($project == "Все") {
