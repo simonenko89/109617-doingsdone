@@ -2,8 +2,7 @@
 
 function include_template(string $template, array $params = []): string
 {
-    $filename = 'templates/'.$template.'.php';
-    if (!file_exists($filename)) {
+    if (!file_exists($template)) {
         return '';        
     }
     
@@ -11,7 +10,7 @@ function include_template(string $template, array $params = []): string
     
     ob_start();
     
-    include $filename;
+    include $template;
     
     return ob_get_clean();
 }
