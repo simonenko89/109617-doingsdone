@@ -1,5 +1,51 @@
 <?php
 include 'functions.php';
+
+$days = rand(0, 3);
+$task_deadline_ts = strtotime("+" . $days . " day"); 
+$current_ts = time();
+$date_deadline = date("d.m.Y", $task_deadline_ts);
+$days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
+
+$project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+$tasks = [
+    [
+        'task' => 'Собеседование в IT компании',
+        'due_date' => "01.06.2017",
+        'project' => 'Работа',
+        'realized' => false
+    ],
+    [
+        'task' => 'Выполнить тестовое задание',
+        'due_date' => "25.05.2017",
+        'project' => 'Работа',
+        'realized' => false
+    ],
+    [
+        'task' => 'Сделать задание первого раздела',
+        'due_date' => "21.04.2017",
+        'project' => 'Учеба',
+        'realized' => true
+    ],
+    [
+        'task' => 'Встреча с другом',
+        'due_date' => "22.04.2017",
+        'project' => 'Входящие',
+        'realized' => false
+    ],
+    [
+        'task' => 'Купить корм для кота',
+        'due_date' => null,
+        'project' => 'Домашние дела',
+        'realized' => false
+    ],
+    [
+        'task' => 'Заказать пиццу',
+        'due_date' => null,
+        'project' => 'Домашние дела',
+        'realized' => false
+    ]
+];
 ?>
 
 <!DOCTYPE html>
@@ -13,14 +59,13 @@ include 'functions.php';
 
 <body><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
-    <?=include_template('header.php', '', ''); ?>
+    <?=include_template('header', []); ?>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
-        <?=include_template('main.php', $project_list, $tasks); ?>
+        <?=include_template('main', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline]); ?>
     </div>
 </div>
-
-<?=include_template('footer.php', '', ''); ?>
+<?=include_template('footer', []); ?>
     
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>
