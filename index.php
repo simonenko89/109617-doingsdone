@@ -59,13 +59,13 @@ $tasks = [
 
 <body><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
-    <?=include_template('header', []); ?>
+    <?=include_template('templates/header.php'); ?>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
-        <?=include_template('main', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline]); ?>
+        <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline]); ?>
     </div>
 </div>
-<?=include_template('footer', []); ?>
+<?=include_template('templates/footer.php'); ?>
     
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>
