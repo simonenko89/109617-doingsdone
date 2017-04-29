@@ -8,28 +8,29 @@ $date_deadline = date("d.m.Y", $task_deadline_ts);
 $days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
 
 $project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+$terms = ["Все задачи", "Повестка дня", "Завтра", "Просроченные"];
 $tasks = [
     [
         'task' => 'Собеседование в IT компании',
-        'due_date' => "01.06.2017",
+        'due_date' => '01.04.2017',
         'project' => 'Работа',
         'realized' => false
     ],
     [
         'task' => 'Выполнить тестовое задание',
-        'due_date' => "25.05.2017",
+        'due_date' => '25.05.2017',
         'project' => 'Работа',
         'realized' => false
     ],
     [
         'task' => 'Сделать задание первого раздела',
-        'due_date' => "21.04.2017",
+        'due_date' => '21.04.2017',
         'project' => 'Учеба',
         'realized' => true
     ],
     [
         'task' => 'Встреча с другом',
-        'due_date' => "22.04.2017",
+        'due_date' => '22.04.2017',
         'project' => 'Входящие',
         'realized' => false
     ],
@@ -46,6 +47,11 @@ $tasks = [
         'realized' => false
     ]
 ];
+
+if (!array_key_exists($_GET['terms'], $terms)) {
+    header("HTTP/1.1 404 Not Found");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +68,7 @@ $tasks = [
     <?=include_template('templates/header.php'); ?>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
-        <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline]); ?>
+        <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline, 'terms' => $terms]); ?>
     </div>
 </div>
 <?=include_template('templates/footer.php'); ?>
