@@ -5,8 +5,8 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
               <?php foreach ($project_list as $index => $project): ?>
-                <li class="main-navigation__list-item <?=$index == 0 ? 'main-navigation__list-item--active' : '';?>" >
-                    <a class="main-navigation__list-item-link" href="#"><?=$project;?></a>
+                <li class="main-navigation__list-item <?=$_GET['project'] == $index ? 'main-navigation__list-item--active' : ''; ?>" >
+                    <a class="main-navigation__list-item-link" href="http://doingsdone?project=<?=$index.'&term='.$_GET['term']; ?>"><?=$project; ?></a>
                     <span class="main-navigation__list-item-count"><?=tasks_cnt($tasks, $project);?></span>
                 </li>
               <?php endforeach; ?>
@@ -26,28 +26,11 @@
         </form>
 
         <div class="tasks-controls">
-            <div class="radio-button-group">
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio" checked="">
-                    <span class="radio-button__text">Все задачи</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Повестка дня</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Завтра</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Просроченные</span>
-                </label>
-            </div>
-
+            <nav class="tasks-switch">
+                <?php foreach($terms as $index => $term): ?>
+                    <a href="http://doingsdone<?='?project='.$_GET['project'].'&term='.$index; ?>" class="tasks-switch__item <?=$_GET['term'] == $index ? 'tasks-switch__item--active' : ''; ?>"><?=$term; ?></a> 
+                <?php endforeach; ?>
+            </nav>
             <label class="checkbox">
                 <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox" checked>
                 <span class="checkbox__text">Показывать выполненные</span>
@@ -55,51 +38,27 @@
         </div>
 
         <table class="tasks">
-          <?php foreach ($tasks as $index => $task): ?>
-            <tr class="tasks__item task <?=$task['realized'] ? 'task--completed' : '';?>">
-                <td class="task__select">
-                    <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" <?=$task['realized'] ? 'checked' : '';?>>
-                        <span class="checkbox__text"><?=$task['task'];?></span>
-                    </label>
-                </td>
-                <td class="task__date"><?=$task['due_date'] ? $task['due_date'] : '';?></td>
+            <?php foreach ($tasks as $index => $task): ?>
+                <?= date('d.m.Y'); ?>
+                <?php if (!array_key_exists($_GET['term'], $terms) || !array_key_exists($_GET['project'], $project_list)): ?>
+                    <?= header("HTTP/1.1 404 Not Found"); ?>
+                <?php elseif ($project_list[$_GET['project']] == $task['project'] && ( ($_GET['term'] == 1 and $task['due_date'] == date('d.m.Y')) || ($_GET['term'] == 2 and $task['due_date'] == (date('d.m.Y') + 1)) || ($_GET['term'] == 3 and $task['due_date'] and $task['due_date'] < date('d.m.Y')) || ($_GET['term'] == 0) ) ): ?>
+                    <tr class="tasks__item task <?=$task['realized'] ? 'task--completed' : '';?>">
+                        <td class="task__select">
+                            <label class="checkbox task__checkbox">
+                                <input class="checkbox__input visually-hidden" type="checkbox" <?=$task['realized'] ? 'checked' : '';?>>
+                                <span class="checkbox__text"><?=$task['task'];?></span>
+                            </label>
+                        </td>
+                        <td class="task__date"><?=$task['due_date'] ? $task['due_date'] : '';?></td>
 
-                <td class="task__controls">
-                </td>
-            </tr>
-          <?php endforeach; ?>
-            <!--добавьте здесь класс "task--important" если эта задача просрочена-->
-            <tr class="tasks__item task <?= $days_until_deadline <= 0 ? 'task--important' : '' ?> ">
-                <td class="task__select">
-                    <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox">
-                        <span class="checkbox__text">Выполнить первое задание</span>
-                    </label>
-                </td>
-
-                <td class="task__date">
-                    <?= $date_deadline ?><!--выведите здесь дату выполнения задачи-->
-                </td>
-
-                <td class="task__controls">
-                    <button class="expand-control" type="button" name="button">Выполнить первое задание</button>
-
-                    <ul class="expand-list hidden">
-                        <li class="expand-list__item">
-                            <a href="#">Выполнить</a>
-                        </li>
-
-                        <li class="expand-list__item">
-                            <a href="#">Удалить</a>
-                        </li>
-
-                        <li class="expand-list__item">
-                            <a href="#">Дублировать</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+                        <td class="task__controls">
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    
+                <?php endif; ?>
+            <?php endforeach; ?>
         </table>
     </main>
 </div>
