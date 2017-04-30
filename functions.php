@@ -34,6 +34,17 @@ function tasks_cnt(array $tasks, string $project): int
     }
     
     return $count;
-};
+}
+
+function array_filtering(array $tasks, string $project): array
+{
+    foreach ($tasks as $task) {
+        if ($task['project'] == $project) {
+            $new_task = $task;
+        }   
+    }
+    
+    return $new_task;
+}
 
 ?>
