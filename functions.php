@@ -38,9 +38,15 @@ function tasks_cnt(array $tasks, string $project): int
 
 function array_filtering(array $tasks, string $project): array
 {
+    $new_task = [];
     foreach ($tasks as $task) {
         if ($task['project'] == $project) {
-            $new_task = $task;
+            $new_task = array(
+                'task' => $task['task'],
+                'due_date' => $task['due_date'],
+                'project' => $task['project'],
+                'realized' => $task['realized']
+            );
         }   
     }
     
