@@ -47,18 +47,22 @@ $tasks = [
     ]
 ];
 
-if (!array_key_exists($_GET['project'], $project_list) and $_GET['project']) {
+
+$tasks_filter = [];
+
+if (isset($_GET['project'])) {
+    if (!array_key_exists($_GET['project'], $project_list)) {
+        
     header("HTTP/1.1 404 Not Found");
     die("Страница не найдена");
-} 
-
-if ($_GET['project']) {
-    $tasks_filter = array_filtering($tasks, $project_list[$_GET['project']]);
+        
+    } else {
+        $tasks_filter = array_filtering($tasks, $project_list[$_GET['project']]);
+    }
+    
 } else {
     $tasks_filter = $tasks;
-}
-
-
+};
 ?>
 
 <!DOCTYPE html>
