@@ -41,14 +41,14 @@
 
         <table class="tasks">
           <?php foreach ($tasks_filter as $index => $task): ?>
-            <tr class="tasks__item task <?=$tasks_filter['realized'] ? 'task--completed' : '';?>">
+            <tr class="tasks__item task <?=$task['realized'] ? 'task--completed' : '';?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" <?=$tasks_filter['realized'] ? 'checked' : '';?>>
-                        <span class="checkbox__text"><?=$tasks_filter['task'];?></span>
+                        <input class="checkbox__input visually-hidden" type="checkbox" <?=$task['realized'] ? 'checked' : '';?>>
+                        <span class="checkbox__text"><?=$task['task'];?></span>
                     </label>
                 </td>
-                <td class="task__date"><?=$tasks_filter['due_date'] ? $tasks_filter['due_date'] : '';?></td>
+                <td class="task__date"><?=$task['due_date'] ? $task['due_date'] : '';?></td>
 
                 <td class="task__controls">
                 </td>
