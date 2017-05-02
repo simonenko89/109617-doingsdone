@@ -63,6 +63,7 @@ if (isset($_GET['project'])) {
 } else {
     $tasks_filter = $tasks;
 };
+
 ?>
 
 <!DOCTYPE html>
