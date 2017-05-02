@@ -46,6 +46,24 @@ $tasks = [
         'realized' => false
     ]
 ];
+
+
+$tasks_filter = [];
+
+if (isset($_GET['project'])) {
+    if (!array_key_exists($_GET['project'], $project_list)) {
+        
+    header("HTTP/1.1 404 Not Found");
+    die("Страница не найдена");
+        
+    } else {
+        $tasks_filter = array_filtering($tasks, $project_list[$_GET['project']]);
+    }
+    
+} else {
+    $tasks_filter = $tasks;
+};
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +80,7 @@ $tasks = [
     <?=include_template('templates/header.php'); ?>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
-        <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline]); ?>
+        <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline, 'tasks_filter' => $tasks_filter]); ?>
     </div>
 </div>
 <?=include_template('templates/footer.php'); ?>

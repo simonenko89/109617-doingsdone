@@ -5,8 +5,8 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
               <?php foreach ($project_list as $index => $project): ?>
-                <li class="main-navigation__list-item <?=$index == 0 ? 'main-navigation__list-item--active' : '';?>" >
-                    <a class="main-navigation__list-item-link" href="#"><?=$project;?></a>
+                <li class="main-navigation__list-item <?=$index == $_GET['project'] ? 'main-navigation__list-item--active' : '';?>" >
+                    <a class="main-navigation__list-item-link" href="http://doingsdone?project=<?=$index;?>"><?=$project;?></a>
                     <span class="main-navigation__list-item-count"><?=tasks_cnt($tasks, $project);?></span>
                 </li>
               <?php endforeach; ?>
@@ -26,27 +26,12 @@
         </form>
 
         <div class="tasks-controls">
-            <div class="radio-button-group">
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio" checked="">
-                    <span class="radio-button__text">Все задачи</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Повестка дня</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Завтра</span>
-                </label>
-
-                <label class="radio-button">
-                    <input class="radio-button__input visually-hidden" type="radio" name="radio">
-                    <span class="radio-button__text">Просроченные</span>
-                </label>
-            </div>
+            <nav class="tasks-switch"> 
+                <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a> 
+                <a href="/" class="tasks-switch__item">Повестка дня</a> 
+                <a href="/" class="tasks-switch__item">Завтра</a> 
+                <a href="/" class="tasks-switch__item">Просроченные</a> 
+            </nav>
 
             <label class="checkbox">
                 <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox" checked>
@@ -55,7 +40,7 @@
         </div>
 
         <table class="tasks">
-          <?php foreach ($tasks as $index => $task): ?>
+          <?php foreach ($tasks_filter as $index => $task): ?>
             <tr class="tasks__item task <?=$task['realized'] ? 'task--completed' : '';?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
