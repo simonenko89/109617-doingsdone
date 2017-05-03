@@ -48,8 +48,23 @@ $tasks = [
 ];
 
 
-$tasks_filter = [];
+if (strlen($_POST['name']) > 0 && strlen($_POST['project']) > 0 && strlen($_POST['date']) > 0) {
+    $new_task = [
+        'task' => xss($_POST['name']),
+        'due_date' => xss($_POST['date']),
+        'project' => $_POST['project'],
+        'realized' => false
+    ];
+    
+    array_unshift($tasks, $new_task);
+}
 
+if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['name'])) {
+    move_uploaded_file($_FILES['preview']['tmp_name'], '/');
+}
+
+
+$tasks_filter = [];
 if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))) {
     if (!array_key_exists($_GET['project'], $project_list)) {
         
@@ -63,10 +78,8 @@ if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))
 } else {
     $tasks_filter = $tasks;
 };
-
-if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['name'])) {
-    move_uploaded_file($_FILES['preview']['tmp_name'], 'doingsdone/');
-}
+    print('<br><br>');
+    var_dump($tasks_filter);
 
 ?>
 
@@ -78,8 +91,7 @@ if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['name'])) {
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
-
-    <?php if (isset($_GET['add']) || strlen($_POST['name']) == 0 || strlen($_POST['project']) == 0 || strlen($_POST['date']) == 0): ?>
+    <?php if (isset($_GET['add'])): ?>
     <body class=<?="overlay";?> >
     <?= include_template('form.php', ['project_list' => $project_list]); ?>
     <?php endif; ?>
