@@ -3,34 +3,29 @@
 
     <h2 class="modal__heading">Добавление задачи</h2>
 
-    <form class="form" class="" action="index.php" method="post">
-        <?php if (strlen($_POST['name']) == 0 || !isset($_POST['name'])): ?>
+    <form class="form" class="" action=<?=(strlen($_POST['name']) == 0 || strlen($_POST['project']) == 0 || strlen($_POST['date']) == 0) ? 'index.php?add' : 'index.php'; ?> method="post">
+
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
-            <?="<span class="."form__error".">Заполните это поле</span>"; ?>
-            <input class="form__input <?="form__input--error"; ?>" type="text" name="name" id="name" value="" placeholder="Введите название">
+            <?=strlen($_POST['name']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
+            <input class="form__input <?=strlen($_POST['name']) == 0 ? 'form__input--error' : ''; ?>" type="text" name="name" id="name" value="<?=$_POST['name']; ?>" placeholder="Введите название">
         </div>
-        <?php endif; ?>
-        
-        <?php if (strlen($_POST['project']) == 0 || !isset($_POST['project'])): ?>
+
         <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
-            <?="<span class="."form__error".">Заполните это поле</span>"; ?>
-            <select class="form__input form__input--select <?="form__input--error"; ?>" name="project" id="project">
+            <?=strlen($_POST['project']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
+            <select class="form__input form__input--select <?=strlen($_POST['project']) == 0 ? 'form__input--error' : ''; ?>" name="project" id="project">
                 <?php foreach ($project_list as $project): ?>
-                <option value=""><?=$project; ?></option>
+                <option value="<?=$project;?>" <?=$_POST['project'] == $project ? 'selected' : '';?> ><?=$project;?></option>
                 <?php endforeach; ?>
-            </select>        
+            </select>
         </div>
-        <?php endif; ?>
         
-        <?php if (strlen($_POST['date']) == 0 || !isset($_POST['date'])): ?>
         <div class="form__row">
             <label class="form__label" for="date">Дата выполнения <sup>*</sup></label>
-            <?="<span class="."form__error".">Заполните это поле</span>"; ?>
-            <input class="form__input form__input--date <?="form__input--error"; ?>" type="text" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+            <?=strlen($_POST['date']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
+            <input class="form__input form__input--date <?=strlen($_POST['date']) == 0 ? 'form__input--error' : ''; ?>" type="text" name="date" id="date" value="<?=$_POST['date']; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
         </div>
-        <?php endif; ?>
 
         <div class="form__row">
             <label class="form__label" for="file">Файл</label>
