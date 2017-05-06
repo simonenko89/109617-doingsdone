@@ -1,6 +1,8 @@
 <?php
+error_reporting(E_ALL);
+
 include 'functions.php';
-var_dump($_POST);
+
 $days = rand(0, 3);
 $task_deadline_ts = strtotime("+" . $days . " day"); 
 $current_ts = time();
@@ -48,7 +50,7 @@ $tasks = [
 ];
 
 
-if (strlen($_POST['name']) > 0 && strlen($_POST['project']) > 0 && strlen($_POST['date']) > 0) {
+if (isset($_POST['name']) && strlen($_POST['name']) > 0 && strlen($_POST['project']) > 0 && strlen($_POST['date']) > 0) {
     $new_task = [
         'task' => xss($_POST['name']),
         'due_date' => xss($_POST['date']),
@@ -59,8 +61,8 @@ if (strlen($_POST['name']) > 0 && strlen($_POST['project']) > 0 && strlen($_POST
     array_unshift($tasks, $new_task);
 }
 
-if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['name'])) {
-    move_uploaded_file($_FILES['preview']['tmp_name'], '/');
+if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['tmp_name'])) {
+    move_uploaded_file($_FILES['preview']['tmp_name'], __DIR__.'/'.$_FILES['preview']['name']);
 }
 
 
@@ -78,8 +80,6 @@ if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))
 } else {
     $tasks_filter = $tasks;
 };
-    print('<br><br>');
-    var_dump($tasks_filter);
 
 ?>
 
