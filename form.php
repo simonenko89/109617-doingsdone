@@ -3,28 +3,28 @@
 
     <h2 class="modal__heading">Добавление задачи</h2>
 
-    <form class="form" class="" action=<?=(strlen($_POST['name']) == 0 || strlen($_POST['project']) == 0 || strlen($_POST['date']) == 0) ? 'index.php?add' : 'index.php'; ?> method="post">
+    <form class="form" class="" action=<?=(!isset($_POST['name']) == 0 || !isset($_POST['project']) == 0 || !isset($_POST['date']) == 0) ? 'index.php?add' : 'index.php'; ?> method="post" enctype="multipart/form-data">
 
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
-            <?=strlen($_POST['name']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
-            <input class="form__input <?=strlen($_POST['name']) == 0 ? 'form__input--error' : ''; ?>" type="text" name="name" id="name" value="<?=$_POST['name']; ?>" placeholder="Введите название">
+            <?=!isset($_POST['name']) ? '<br><span>Заполните это поле</span>' : '';?>
+            <input class="form__input <?=!isset($_POST['name']) ? 'form__input--error' : ''; ?>" type="text" name="name" id="name" value="<?=isset($_POST['name']) ? $_POST['name'] : ''; ?>" placeholder="Введите название">
         </div>
 
         <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
-            <?=strlen($_POST['project']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
-            <select class="form__input form__input--select <?=strlen($_POST['project']) == 0 ? 'form__input--error' : ''; ?>" name="project" id="project">
+            <?=!isset($_POST['project']) ? '<br><span>Заполните это поле</span>' : '';?>
+            <select class="form__input form__input--select <?=!isset($_POST['project']) ? 'form__input--error' : ''; ?>" name="project" id="project">
                 <?php foreach ($project_list as $project): ?>
-                <option value="<?=$project;?>" <?=$_POST['project'] == $project ? 'selected' : '';?> ><?=$project;?></option>
+                <option value="<?=$project;?>" <?=isset($_POST['project']) && $_POST['project'] == $project ? 'selected' : '';?> ><?=$project;?></option>
                 <?php endforeach; ?>
             </select>
         </div>
         
         <div class="form__row">
             <label class="form__label" for="date">Дата выполнения <sup>*</sup></label>
-            <?=strlen($_POST['date']) == 0 ? '<br><span>Заполните это поле</span>' : '';?>
-            <input class="form__input form__input--date <?=strlen($_POST['date']) == 0 ? 'form__input--error' : ''; ?>" type="text" name="date" id="date" value="<?=$_POST['date']; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+            <?=!isset($_POST['date']) ? '<br><span>Заполните это поле</span>' : '';?>
+            <input class="form__input form__input--date <?=!isset($_POST['date']) ? 'form__input--error' : ''; ?>" type="text" name="date" id="date" value="<?=isset($_POST['date']) ? $_POST['date'] : ''; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
         </div>
 
         <div class="form__row">
