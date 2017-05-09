@@ -4,7 +4,7 @@
     </a>
 
     <div class="main-header__side">
-        <a class="main-header__side-item button button--plus" href="http://doingsdone?add">Добавить задачу</a>
+        <a class="main-header__side-item button button--plus" href="index.php?add">Добавить задачу</a>
 
         <div class="main-header__side-item user-menu">
             <div class="user-menu__image">
@@ -12,9 +12,9 @@
             </div>
 
             <div class="user-menu__data">
-                <p>Константин</p>
+                <p><?=$username;?></p>
 
-                <a href="#">Выйти</a>
+                <a href="/logout.php">Выйти</a>
             </div>
         </div>
     </div>
