@@ -6,7 +6,7 @@
             <ul class="main-navigation__list">
               <?php foreach ($project_list as $index => $project): ?>
                 <li class="main-navigation__list-item <?=$index == $_GET['project'] ? 'main-navigation__list-item--active' : '';?>" >
-                    <a class="main-navigation__list-item-link" href="http://doingsdone?project=<?=$index;?>"><?=$project;?></a>
+                    <a class="main-navigation__list-item-link" href="?project=<?=$index;?>"><?=$project;?></a>
                     <span class="main-navigation__list-item-count"><?=tasks_cnt($tasks, $project);?></span>
                 </li>
               <?php endforeach; ?>

@@ -48,4 +48,13 @@ function array_filtering(array $tasks, string $project): array
     return $new_task;
 }
 
-?>
+function searchUserByEmail($email, $users)
+{
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            return $user;
+        }
+    }
+    
+    return null;
+}

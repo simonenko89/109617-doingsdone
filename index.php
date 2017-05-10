@@ -1,13 +1,10 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 
 include 'functions.php';
 
-$days = rand(0, 3);
-$task_deadline_ts = strtotime("+" . $days . " day"); 
-$current_ts = time();
-$date_deadline = date("d.m.Y", $task_deadline_ts);
-$days_until_deadline = floor(($task_deadline_ts - $current_ts) / 86400);
+include 'logic.php';
 
 $project_list = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 $tasks = [
@@ -49,40 +46,29 @@ $tasks = [
     ]
 ];
 
-
-if (isset($_POST['name']) && strlen($_POST['name']) > 0 && strlen($_POST['project']) > 0 && strlen($_POST['date']) > 0) {
-    $new_task = [
-        'task' => xss($_POST['name']),
-        'due_date' => xss($_POST['date']),
-        'project' => $_POST['project'],
-        'realized' => false
-    ];
-    
-    array_unshift($tasks, $new_task);
-}
-
-if (isset($_FILES['preview']) && is_uploaded_file($_FILES['preview']['tmp_name'])) {
-    move_uploaded_file($_FILES['preview']['tmp_name'], __DIR__.'/'.$_FILES['preview']['name']);
-}
-
-
-$tasks_filter = [];
-if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))) {
-    if (!array_key_exists($_GET['project'], $project_list)) {
-        
-    header("HTTP/1.1 404 Not Found");
-    die("Страница не найдена");
-        
-    } else {
-        $tasks_filter = array_filtering($tasks, $project_list[$_GET['project']]);
-    }
-    
-} else {
-    $tasks_filter = $tasks;
-};
+$users = [
+    [
+        'email' => 'ignat.v@gmail.com',
+        'name' => 'Игнат',
+        'password' => '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka'
+    ],
+    [
+        'email' => 'kitty_93@li.ru',
+        'name' => 'Леночка',
+        'password' => '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa'
+    ],
+    [
+        'email' => 'warrior07@mail.ru',
+        'name' => 'Руслан',
+        'password' => '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW'
+    ]
+];
 
 ?>
 
+<?php if (!isset($_SESSION['user'])): ?>
+    <?=include_template('templates/guest.php', ['showLoginWin' => $showLoginWin, 'isValidEmail' => $isValidEmail, 'isValidPass' => $isValidPass, 'email' => $email, 'isWrongPass' => $isWrongPass]); ?>
+<?php else: ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -97,7 +83,7 @@ if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))
     <?php endif; ?>
 
         <h1 class="visually-hidden">Дела в порядке</h1>
-        <?=include_template('templates/header.php'); ?>
+        <?=include_template('templates/header.php', ['username' => $username]); ?>
         <div class="page-wrapper">
             <div class="container container--with-sidebar">
             <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline, 'tasks_filter' => $tasks_filter]); ?>
@@ -148,3 +134,4 @@ if (isset($_GET['project']) || (isset($_POST['send']) && !isset($_POST['name']))
         <script type="text/javascript" src="js/script.js"></script>
     </body>
 </html>
+<?php endif; ?>
