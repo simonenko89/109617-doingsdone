@@ -19,7 +19,7 @@
         </a>
 
         <div class="main-header__side">
-          <a class="main-header__side-item button button--transparent" href="http://doingsdone?login">Войти</a>
+          <a class="main-header__side-item button button--transparent" href="?login">Войти</a>
         </div>
       </header>
 
@@ -89,16 +89,29 @@
 
         <input class="form__input <?=$isValidEmail ? '' : 'form__input--error';?>" type="text" name="email" id="email" value="<?=$isValidEmail ? $email : '';?>" placeholder="Введите e-mail">
           
-        <?=$isValidEmail ? '' : '<p class="form__message">E-mail введён некорректно</p>';?>
+        <?php if (!$isValidEmail): ?>
+        <p class="form__message">E-mail введён некорректно</p>
+        <?php endif; ?>
+          
       </div>
 
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
         <input class="form__input" type="password" name="password" id="password" value="" placeholder="Введите пароль">
-
-        <?=$isValidPass ? '' : '<p class="form__message">Введите пароль</p>';?>
-        <?=$isWrongPass ? '' : '<p class="form__message">Вы ввели неверный пароль</p>';?>
+          
+        <?php if (!$isValidPass): ?>
+        <p class="form__message">Введите пароль</p>
+        <?php endif; ?>
+        
+        <?php if ($isWrongPass): ?>
+        <p class="form__message">Вы ввели неверный пароль</p>
+        <?php endif; ?>
+        <?='$isValidEmail: '.$isValidEmail.'<br>'; ?>
+        <?='$isValidPass: '.$isValidPass.'<br>'; ?>
+        <?='$isWrongPass: '.var_dump($isWrongPass).'<br>'; ?>
+          
+          
       </div>
 
       <div class="form__row">
