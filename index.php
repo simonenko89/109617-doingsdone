@@ -86,7 +86,7 @@ $users = [
         <?=include_template('templates/header.php', ['username' => $username]); ?>
         <div class="page-wrapper">
             <div class="container container--with-sidebar">
-            <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline, 'tasks_filter' => $tasks_filter]); ?>
+            <?=include_template('templates/main.php', ['project_list' => $project_list, 'tasks' => $tasks, 'days_until_deadline' => $days_until_deadline, 'date_deadline' => $date_deadline, 'tasks_filter' => $tasks_filter, 'isChecked' => $isChecked]); ?>
             </div>
         </div>
         <?=include_template('templates/footer.php'); ?>
