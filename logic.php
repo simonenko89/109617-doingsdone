@@ -151,5 +151,5 @@ if ($_COOKIE['show_completed'] == 1) {
 }
 
 if (!$isChecked) {
-    arrayDelRealizedTask($tasks_filter);
+    $tasks_filter = arrayDelRealizedTask($tasks_filter);
 }
