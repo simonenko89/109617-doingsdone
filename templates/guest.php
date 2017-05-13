@@ -106,11 +106,7 @@
         
         <?php if ($isWrongPass): ?>
         <p class="form__message">Вы ввели неверный пароль</p>
-        <?php endif; ?>
-        <?='$isValidEmail: '.$isValidEmail.'<br>'; ?>
-        <?='$isValidPass: '.$isValidPass.'<br>'; ?>
-        <?='$isWrongPass: '.var_dump($isWrongPass).'<br>'; ?>
-          
+        <?php endif; ?>          
           
       </div>
 
