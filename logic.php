@@ -138,3 +138,18 @@ if (isset($_POST['password']) && isset($_POST['email'])) {
     }
 }
 $username = (isset($_SESSION['user'])) ? $_SESSION['user']['name'] : '';
+
+//Работа с куками
+if (isset($_GET['show_completed'])) {
+    setcookie('show_completed', $_GET['show_completed'], strtotime("+30 days"));
+    header("Location: /index.php");
+}
+
+$isChecked = false;
+if ($_COOKIE['show_completed'] == 1) {
+    $isChecked = true;
+}
+
+if (!$isChecked) {
+    $tasks_filter = arrayDelRealizedTask($tasks_filter);
+}

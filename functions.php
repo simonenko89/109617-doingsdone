@@ -48,6 +48,16 @@ function array_filtering(array $tasks, string $project): array
     return $new_task;
 }
 
+function arrayDelRealizedTask(array $tasks): array
+{
+    foreach ($tasks as $index => $task) {
+        if ($task['realized']) {
+            unset($tasks[$index]);
+        }   
+    }
+    return $tasks;
+}
+
 function searchUserByEmail($email, $users)
 {
     foreach ($users as $user) {

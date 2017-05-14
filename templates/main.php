@@ -34,7 +34,7 @@
             </nav>
 
             <label class="checkbox">
-                <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox" checked>
+                <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox" <?=$isChecked ? 'checked' : '';?> >
                 <span class="checkbox__text">Показывать выполненные</span>
             </label>
         </div>
