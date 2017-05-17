@@ -1,5 +1,5 @@
 <?php
-
+echo strtotime('22.04.2017');
 $days = rand(0, 3);
 $task_deadline_ts = strtotime("+" . $days . " day"); 
 $current_ts = time();
